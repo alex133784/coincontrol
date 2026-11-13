@@ -1,13 +1,19 @@
 {
   "id": "/coincontrol/",
+  "scope": "/coincontrol/",
   "name": "CoinControl: Карманный финансовый аналитик",
   "short_name": "CoinControl",
   "description": "Автономное мобильное приложение для оперативного учета личных финансов и планирования накоплений учащихся",
+  "lang": "ru",
+  "dir": "ltr",
   "start_url": "./index.html",
   "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
   "orientation": "portrait",
   "background_color": "#121214",
   "theme_color": "#121214",
+  "categories": ["finance", "education", "utilities"],
+  "prefer_related_applications": false,
   "icons": [
     {
       "src": "icons/Code_Generated_Image%20(1).png",
@@ -26,6 +32,29 @@
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "icons/Code_Generated_Image%20(2).png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Главный экран учета баланса и категорий расходов CoinControl"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Баланс и расходы",
+      "short_name": "Баланс",
+      "description": "Быстрая запись доходов и расходов",
+      "url": "./index.html",
+      "icons": [
+        {
+          "src": "icons/Code_Generated_Image%20(1).png",
+          "sizes": "192x192"
+        }
+      ]
     }
   ]
 }
