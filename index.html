@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#121214" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>CoinControl — Карманный финансовый аналитик</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" type="image/svg+xml" href="icons/icon.svg" />
+  <link rel="stylesheet" href="css/tokens.css" />
+  <link rel="stylesheet" href="css/main.css" />
+</head>
+<body>
+  <div id="app">
+    <header class="app-header">
+      <div class="brand">
+        <span class="brand-logo">◈</span>
+        <div>
+          <h1 class="brand-title">CoinControl</h1>
+          <p class="brand-subtitle">Карманный финансовый аналитик</p>
+        </div>
+      </div>
+      <button id="btn-settings" class="icon-btn" aria-label="Настройки и данные">⚙</button>
+    </header>
+
+    <main class="screens-container">
+      <section id="screen-balance" class="screen active">
+        <div class="card balance-card">
+          <div class="balance-header">
+            <span class="label">Доступный остаток</span>
+            <span id="days-badge" class="badge">Лимит на 7 дн.</span>
+          </div>
+          <div id="total-balance" class="balance-amount">0 ₽</div>
+          <div class="daily-limit-row">
+            <span>Безопасный дневной лимит:</span>
+            <strong id="daily-limit">0 ₽ / день</strong>
+          </div>
+        </div>
+
+        <div class="action-buttons">
+          <button id="btn-quick-income" class="btn btn-income">+ Доход</button>
+          <button id="btn-quick-expense" class="btn btn-expense">− Расход</button>
+        </div>
+
+        <div class="section-block">
+          <h2 class="section-title">Быстрый расход по категории</h2>
+          <div id="category-grid" class="category-grid"></div>
+        </div>
+
+        <div class="section-block">
+          <div class="section-header">
+            <h2 class="section-title">Последние операции</h2>
+            <span id="tx-count" class="muted-text">0 записей</span>
+          </div>
+          <ul id="transaction-list" class="transaction-list"></ul>
+        </div>
+      </section>
+
+      <section id="screen-analytics" class="screen">
+        <div class="period-tabs">
+          <button class="period-tab active" data-period="week">Неделя</button>
+          <button class="period-tab" data-period="month">Месяц</button>
+          <button class="period-tab" data-period="all">Всё время</button>
+        </div>
+
+        <div class="card chart-card">
+          <div class="chart-wrapper">
+            <canvas id="expense-chart" width="240" height="240"></canvas>
+            <div class="chart-center">
+              <span class="muted-text">Расходы</span>
+              <strong id="chart-total">0 ₽</strong>
+              <span id="chart-avg" class="muted-small">Ср. чек: 0 ₽</span>
+            </div>
+          </div>
+        </div>
+
+        <div id="insight-card" class="card insight-card">
+          <span class="insight-badge">Анализ 50/30/20</span>
+          <p id="insight-text">Добавьте первые расходы, чтобы увидеть структуру трат и рекомендации.</p>
+        </div>
+
+        <div class="section-block">
+          <h2 class="section-title">Структура по категориям</h2>
+          <div id="category-breakdown" class="breakdown-list"></div>
+        </div>
+      </section>
+
+      <section id="screen-savings" class="screen">
+        <div class="card goal-card">
+          <div class="goal-header">
+            <div>
+              <span class="label">Активная цель</span>
+              <h2 id="goal-title" class="goal-title">Апгрейд ПК / Наушники</h2>
+            </div>
+            <button id="btn-edit-goal" class="btn-small">Изменить</button>
+          </div>
+
+          <div class="goal-numbers">
+            <strong id="goal-current">0 ₽</strong>
+            <span id="goal-target" class="muted-text">из 15 000 ₽</span>
+          </div>
+
+          <div class="progress-track">
+            <div id="goal-progress-bar" class="progress-fill" style="width: 0%;"></div>
+          </div>
+
+          <div class="goal-footer">
+            <span id="goal-percent">0%</span>
+            <span id="goal-remaining" class="muted-text">Осталось: 15 000 ₽</span>
+          </div>
+
+          <div id="goal-forecast" class="forecast-box">
+            Откладывайте часть доходов, чтобы рассчитать срок достижения цели.
+          </div>
+        </div>
+
+        <div class="card setting-row-card">
+          <div class="setting-info">
+            <strong>Автоотчисление «Сначала заплати себе»</strong>
+            <span class="muted-small">Автоматически переводить 20% от любого дохода в копилку</span>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="toggle-autosave" checked />
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="action-buttons">
+          <button id="btn-add-saving" class="btn btn-brand">+ Пополнить копилку</button>
+          <button id="btn-spend-saving" class="btn btn-secondary">Снять на цель</button>
+        </div>
+
+        <div class="section-block">
+          <h2 class="section-title">Журнал накоплений</h2>
+          <ul id="savings-list" class="transaction-list"></ul>
+        </div>
+      </section>
+    </main>
+
+    <nav class="bottom-nav" aria-label="Основная навигация">
+      <button class="nav-item active" data-target="screen-balance">
+        <span class="nav-icon">💳</span>
+        <span class="nav-label">Баланс</span>
+      </button>
+      <button class="nav-item" data-target="screen-analytics">
+        <span class="nav-icon">📊</span>
+        <span class="nav-label">Аналитика</span>
+      </button>
+      <button class="nav-item" data-target="screen-savings">
+        <span class="nav-icon">🎯</span>
+        <span class="nav-label">Копилка</span>
+      </button>
+    </nav>
+
+    <div id="modal-keypad" class="modal-backdrop hidden">
+      <div class="bottom-sheet">
+        <div class="sheet-header">
+          <span id="keypad-title" class="sheet-title">Новая операция</span>
+          <button id="btn-close-keypad" class="icon-btn">✕</button>
+        </div>
+        <div class="keypad-display">
+          <span id="keypad-amount">0</span>
+          <span class="currency">₽</span>
+        </div>
+        <input type="text" id="keypad-note" class="note-input" placeholder="Комментарий (необязательно)..." maxlength="40" />
+        <div class="numpad-grid">
+          <button class="num-key" data-key="1">1</button>
+          <button class="num-key" data-key="2">2</button>
+          <button class="num-key" data-key="3">3</button>
+          <button class="num-key" data-key="4">4</button>
+          <button class="num-key" data-key="5">5</button>
+          <button class="num-key" data-key="6">6</button>
+          <button class="num-key" data-key="7">7</button>
+          <button class="num-key" data-key="8">8</button>
+          <button class="num-key" data-key="9">9</button>
+          <button class="num-key key-clear" data-key="C">C</button>
+          <button class="num-key" data-key="0">0</button>
+          <button class="num-key key-back" data-key="⌫">⌫</button>
+        </div>
+        <button id="btn-confirm-tx" class="btn btn-primary full-width">Подтвердить</button>
+      </div>
+    </div>
+
+    <div id="modal-settings" class="modal-backdrop hidden">
+      <div class="bottom-sheet">
+        <div class="sheet-header">
+          <span class="sheet-title">Настройки и база данных</span>
+          <button id="btn-close-settings" class="icon-btn">✕</button>
+        </div>
+        <div class="settings-actions">
+          <button id="btn-copy-json" class="btn btn-secondary full-width">📋 Скопировать базу в буфер (JSON)</button>
+          <button id="btn-export-json" class="btn btn-secondary full-width">⬇ Скачать файл базы (JSON)</button>
+          <label class="btn btn-secondary full-width file-btn">
+            ⬆ Импорт базы из файла (JSON)
+            <input type="file" id="input-import-json" accept=".json" hidden />
+          </label>
+          <button id="btn-load-demo" class="btn btn-brand full-width">✨ Загрузить демо-данные</button>
+          <button id="btn-reset-all" class="btn btn-expense full-width">🗑 Обнулить все данные</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="toast" class="toast hidden"></div>
+  </div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

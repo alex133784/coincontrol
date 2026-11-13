@@ -1,0 +1,30 @@
+:root {
+  --bg-primary: #121214;
+  --bg-surface: #1E1E24;
+  --bg-elevated: #272730;
+  --border-color: #2E2E38;
+  --text-primary: #F3F4F6;
+  --text-secondary: #9CA3AF;
+  --text-muted: #6B7280;
+  --color-income: #10B981;
+  --color-income-bg: rgba(16, 185, 129, 0.14);
+  --color-expense: #EF4444;
+  --color-expense-bg: rgba(239, 68, 68, 0.14);
+  --color-brand: #6366F1;
+  --color-brand-bg: rgba(99, 102, 241, 0.16);
+  --cat-food: #EF4444;
+  --cat-transport: #3B82F6;
+  --cat-games: #8B5CF6;
+  --cat-market: #EC4899;
+  --cat-savings: #10B981;
+  --cat-other: #6B7280;
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 22px;
+  --radius-full: 9999px;
+  --space-xs: 6px;
+  --space-sm: 10px;
+  --space-md: 16px;
+  --space-lg: 22px;
+  --nav-height: 68px;
+}
